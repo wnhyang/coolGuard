@@ -101,7 +101,7 @@ public class DecisionServiceImpl implements DecisionService {
             stopWatch.start("ES");
             EventData eventData = new EventData();
             eventData.setZd(fieldContext);
-            eventData.setZbs(DecisionContextHolder.getIndicatorContext().convert());
+            eventData.setZb(DecisionContextHolder.getIndicatorContext().convert());
             eventData.setPolicySetResult(DecisionContextHolder.getEventContext().getPolicySetResult());
             try {
                 commonProducer.send(KafkaConstant.EVENT_ES_DATA, JsonUtil.toJsonString(eventData));

@@ -8,7 +8,8 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,13 +37,27 @@ public class IndicatorContext {
         return indicatorMap.get(code).getValueData(clazz);
     }
 
-    public List<IndicatorResult> convert() {
+    public Map<String, IndicatorResult> convert() {
         if (CollUtil.isEmpty(indicatorMap)) {
-            return null;
+            return Collections.emptyMap();
         }
-        return indicatorMap.values().stream().map(
-                indicatorCtx -> new IndicatorResult(indicatorCtx.getCode(), indicatorCtx.getName(), indicatorCtx.getType(), indicatorCtx.getVersion(), indicatorCtx.getValue())).toList();
+        Map<String, IndicatorResult> resultMap = new HashMap<>(indicatorMap.size());
+        for (Map.Entry<String, IndicatorCtx> entry : indicatorMap.entrySet()) {
+            IndicatorCtx indicatorCtx = entry.getValue();
+            resultMap.put(
+                    entry.getKey(),
+                    new IndicatorResult(
+                            indicatorCtx.getCode(),
+                            indicatorCtx.getName(),
+                            indicatorCtx.getType(),
+                            indicatorCtx.getVersion(),
+                            indicatorCtx.getValue()
+                    )
+            );
+        }
+        return resultMap;
     }
+
 
     @Data
     public static class IndicatorCtx extends IndicatorVersion {

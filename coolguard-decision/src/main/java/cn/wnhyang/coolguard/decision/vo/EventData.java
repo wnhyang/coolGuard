@@ -4,7 +4,6 @@ import cn.wnhyang.coolguard.decision.vo.result.IndicatorResult;
 import cn.wnhyang.coolguard.decision.vo.result.PolicySetResult;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +15,7 @@ public class EventData {
 
     private Map<String, Object> zd;
 
-    private List<IndicatorResult> zbs;
+    private Map<String, IndicatorResult> zb;
 
     private PolicySetResult policySetResult;
 }
